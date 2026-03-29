@@ -196,3 +196,21 @@ def mark_calendar_event_synced(schedule_id: int, event_id: str) -> None:
         """,
         (event_id, schedule_id),
     )
+
+
+from database.connection import get_connection
+
+def insert_test():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                "INSERT INTO users (name) VALUES (%s)",
+                ("test_user",)
+            )
+        conn.commit()
+
+def get_users():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT * FROM users")
+            return cur.fetchall()
